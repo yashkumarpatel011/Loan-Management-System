@@ -504,6 +504,9 @@ spring.h2.console.path=/h2-console
 
 ```
 
+## Note : 
+- Database can easily migrate to the AWS datasource.
+
 ## **Contributors**
 
 - **[Yashkumar Patel]**
