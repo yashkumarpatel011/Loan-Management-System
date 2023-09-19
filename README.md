@@ -32,6 +32,11 @@ cd Loan-Management-System
 ./mvnw spring-boot:run
 
 ```
+- For IDE
+```
+cd /src/main/java/com/aspire/AspireBackEndAssignment.java
+Run as a Java application
+```
 
 **The application will start running on [http://localhost:8080](http://localhost:8081)**
 
@@ -60,6 +65,14 @@ The system uses JWT (JSON Web Token) authentication to ensure secure access to i
 - Role-based access control is in place:
   - **ROLE_USER** can create loans and record repayments, as well as view their own loans.
   - **ROLE_ADMIN** can view all loans, approve loan requests, and reassign loans.
+
+## High Level Diagram 
+
+```
+Loan_Management_Sequence_Diagram.png
+
+```
+
 
 ## Tables ##
 
@@ -100,6 +113,17 @@ This API uses 3 tables to operate, USER_DATA , LOAN_DETAILS and REPAYMENT_DETAIL
 | SCHEDULED_ON | datetime  |                        |
 | PAID_AMOUNT  | double    | 1000.0                 |
 
+## Postman Collection
+
+```
+Loan Management System API's Collections.postman_collection.json
+
+```
+
+### Guide 
+- Download the .json file 
+- Import the .json in Postman 
+- You can see the All API's in your postman_collection
 
 ## **API Endpoints**
 

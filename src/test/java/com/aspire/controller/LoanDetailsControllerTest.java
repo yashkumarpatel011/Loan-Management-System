@@ -97,7 +97,7 @@ public class LoanDetailsControllerTest {
 
         Mockito.when(userService.loginUser()).thenReturn(userData);
         Mockito.when(loanService.approveOrRejectLoan(Mockito.any(),Mockito.any(),Mockito.any())).thenReturn(true);
-        ResponseEntity<String> responseEntity = loanDetailsController.approveOrRejectLoan("ACCEPTED",1);
+        ResponseEntity<String> responseEntity = loanDetailsController.approveOrRejectLoan("APPROVED",1);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -107,7 +107,7 @@ public class LoanDetailsControllerTest {
 
         Mockito.when(userService.loginUser()).thenReturn(userData);
         Mockito.when(loanService.approveOrRejectLoan(Mockito.any(),Mockito.any(),Mockito.any())).thenReturn(false);
-        ResponseEntity<String> responseEntity = loanDetailsController.approveOrRejectLoan("ACCEPTED",1);
+        ResponseEntity<String> responseEntity = loanDetailsController.approveOrRejectLoan("APPROVED",1);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
@@ -115,6 +115,7 @@ public class LoanDetailsControllerTest {
     @Test
     public void testWithoutApproveOrReject() throws Exception {
 
+        Mockito.when(userService.loginUser()).thenReturn(userData);
         ResponseEntity<String> responseEntity = loanDetailsController.approveOrRejectLoan("APPROVED",1);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());

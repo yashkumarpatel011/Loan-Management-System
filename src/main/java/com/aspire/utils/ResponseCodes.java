@@ -21,7 +21,30 @@ public enum ResponseCodes {
 
     SIGNUP_SUCCESSFULL("SIGNUP_SUCCESSFULL"),
 
-    USER_ALREADY_EXIST("USER_ALREADY_EXIST");
+    USER_ALREADY_EXIST("USER_ALREADY_EXIST"),
+    REPAYMENT_PENDING("Your Loan is not approved yet. Kindly wait to approve the loan"),
+
+    REPAYMENT_PAID("You don't have any due payment."),
+
+    REPAYMENT_REJECTED("Your Loan is rejected by user admin user. Kindly contact the customer care for more information"),
+
+    REPAYMENT_CANCELLED("You have cancelled the loan."),
+
+    NOT_HAVE_LOAN("You don't have any loan with us."),
+
+    LOGIN_BEFORE_LOAN_CREATION("Please login before creating Loan"),
+
+    LOAN_APPROVED("Loan has been approved"),
+
+    LOAN_STATUS_NOT_VALID("Loan Status is not accepted"),
+
+    LOAN_ASSIGNED_DIFF_ADMIN("Unable to approve the loan because loan assigned to different admin"),
+
+    LOGIN_BEFORE_LOAN_APPROVED("Please login before approving Loan"),
+
+    GET_LOAN_PERMISSION_DENIED("You don't have any permission to view the loan details"),
+
+    LOGIN_BEFORE_GET_LOAN("Please login before fetching Loan Detials");
 
 
 

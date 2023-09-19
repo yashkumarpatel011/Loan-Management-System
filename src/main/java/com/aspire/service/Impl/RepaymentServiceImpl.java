@@ -106,40 +106,6 @@ public class RepaymentServiceImpl implements RepaymentService {
             log.info("Amount is less than the scheduled Repayment");
             return Pair.of(ResponseCodes.LESS_AMOUNT.getValue(),totalAmount);
         }
-
-
-
-/*
-        while (amount > 0.0) {
-
-            log.info("********** Amount before process *********" + amount);
-
-            RepaymentDetails repaymentDetails = repaymentDetailsList.get(indexOfRepayment);
-            double amountOfRepaymentPerInst = repaymentDetails.getAmount();
-
-            if (amount >= amountOfRepaymentPerInst) {
-                repaymentDetails.setStatus(LoanStage.COMPLETED.getValue());
-                repaymentDetails.setPaidAmount(amountOfRepaymentPerInst);
-                amount -=amountOfRepaymentPerInst;
-                repaymentInstallationCount++;
-                amount = Math.round(amount * 10.0) / 10.0;
-            } else {
-
-                repaymentDetails.setPaidAmount(amount);
-                amountOfRepaymentPerInst -= amount;
-                repaymentDetails.setAmount(amountOfRepaymentPerInst);
-                amount = 0.0;
-            }
-            indexOfRepayment++;
-
-            log.info("****** Amount after process ******** " + amount);
-        }
-
-        if (repaymentDetailsList.size() == repaymentInstallationCount) {
-            return true;
-        }
-        return false;
-        */
     }
 }
 

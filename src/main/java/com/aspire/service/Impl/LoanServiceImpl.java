@@ -140,7 +140,7 @@ public class LoanServiceImpl implements LoanService {
                     switch (loanStatus) {
 
                         case "PENDING": {
-                            resultMsg = "Your Loan is not approved yet. Kindly wait to approve the loan";
+                            resultMsg = ResponseCodes.REPAYMENT_PENDING.getValue();
                             break;
                         }
                         case "APPROVED": {
@@ -155,22 +155,22 @@ public class LoanServiceImpl implements LoanService {
                             break;
                         }
                         case "PAID": {
-                            resultMsg = "You don't have any due payment.";
+                            resultMsg = ResponseCodes.REPAYMENT_PAID.getValue();
                             break;
                         }
                         case "REJECTED": {
-                            resultMsg = "Your Loan is rejected by user admin user. Kindly contact the customer care for more information";
+                            resultMsg = ResponseCodes.REPAYMENT_REJECTED.getValue();
                             break;
                         }
                         case "CANCELLED": {
-                            resultMsg = "You have cancelled the loan.";
+                            resultMsg = ResponseCodes.REPAYMENT_CANCELLED.getValue();
                             break;
                         }
                     }
                     return resultMsg;
                 }
 
-                return "You don't have any loan with us.";
+                return ResponseCodes.NOT_HAVE_LOAN.getValue();
             }
         } catch (Exception e) {
             log.error("Exception has been occured while paying loan amount ", e);
