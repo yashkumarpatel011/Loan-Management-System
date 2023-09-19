@@ -46,6 +46,10 @@ public class RepaymentServiceImpl implements RepaymentService {
 
             if(Constant.WEEKLY.equalsIgnoreCase(paymentFreq)) {
                 currentDate = currentDate.plus(1, ChronoUnit.WEEKS);
+            } else if (Constant.MONTHLY.equalsIgnoreCase(paymentFreq)) {
+                currentDate = currentDate.plus(1,ChronoUnit.MONTHS);
+            } else {
+                currentDate = currentDate.plus(1, ChronoUnit.YEARS);
             }
 
             resultSet.add(RepaymentDetails.builder()
@@ -54,7 +58,10 @@ public class RepaymentServiceImpl implements RepaymentService {
                     .scheduledOn(currentDate)
                     .status(LoanStage.PENDING.getValue())
                     .build());
+
+            log.info("Added in the resultSet");
         }
+        log.info("Data Saved successfully ");
         repaymentRepository.saveAll(resultSet);
     }
 
@@ -76,8 +83,13 @@ public class RepaymentServiceImpl implements RepaymentService {
             repaymentObject.setPaidAmount(amount);
             indexOfRepayment++;
 
+            log.info("ScheduledPayment Paid Successfully");
+
             double remainingAmount = totalAmount - amount;
             int remainingduration = repaymentDetailsList.size() - indexOfRepayment;
+
+            log.info("Remaining Amount: {}" , remainingAmount);
+            log.info("Remaining Duration: {}" , remainingduration);
 
             double revisedReinstallationAmount = Math.round((remainingAmount/remainingduration) * 10.0)/10.0;
 
@@ -88,7 +100,7 @@ public class RepaymentServiceImpl implements RepaymentService {
             }
 
             if(remainingAmount <= 0.0) {
-
+                log.info("Remaining amount is zero or negative");
                 if(repaymentDetailsList.size() > indexOfRepayment) {
 
                     for (int i = indexOfRepayment ; i < repaymentDetailsList.size() ; i++) {
@@ -96,12 +108,13 @@ public class RepaymentServiceImpl implements RepaymentService {
                         repaymentObject.setStatus(LoanStage.NOT_REQUIRED.getValue());
                     }
                 }
-
+                log.info("Set the Remaining Scheduled Payment as NOT_REQUIRED");
+                log.info(ResponseCodes.LOAN_COMPLETED.getValue());
                 return Pair.of(ResponseCodes.LOAN_COMPLETED.getValue(),remainingAmount);
             } else {
+                log.info(ResponseCodes.SCHEDULED_PAYMENT_COMPLETED.getValue());
                 return Pair.of(ResponseCodes.SCHEDULED_PAYMENT_COMPLETED.getValue(),remainingAmount);
             }
-
         } else {
             log.info("Amount is less than the scheduled Repayment");
             return Pair.of(ResponseCodes.LESS_AMOUNT.getValue(),totalAmount);

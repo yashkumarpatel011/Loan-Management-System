@@ -44,7 +44,9 @@ public enum ResponseCodes {
 
     GET_LOAN_PERMISSION_DENIED("You don't have any permission to view the loan details"),
 
-    LOGIN_BEFORE_GET_LOAN("Please login before fetching Loan Detials");
+    LOGIN_BEFORE_GET_LOAN("Please login before fetching Loan Detials"),
+
+    ASSIGNED_UPDATED("Assigned Updated Successfully");
 
 
 

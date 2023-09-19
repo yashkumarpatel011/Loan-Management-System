@@ -42,13 +42,14 @@ public class LoanServiceImpl implements LoanService {
         loanDetails.setStatus(LoanStage.PENDING.getValue());
         loanDetails.setRePaymentFreq(Constant.WEEKLY);
         loanDetails.setRemainingAmount(loanDetails.getAmount());
-
+        log.info("Fetching Admin user ..");
         UserData adminUser = userService.fetchAdminUser();
 
         if (adminUser != null) {
+            log.info("Admin user found with id {}", adminUser.getId());
             loanDetails.setAdminId(adminUser.getId());
         }
-
+        log.info("Admin user not found");
         LoanDetails detailsInDb = loanRepository.save(loanDetails);
         log.info("Calling RepaymentService to create the rePayment details");
         repaymentService.createRepayment(loanDetails);
@@ -60,6 +61,7 @@ public class LoanServiceImpl implements LoanService {
     @Transactional
     public boolean approveOrRejectLoan(Integer loanId, UserData user, String status) {
 
+        log.info("Started checking for approval..");
         Optional<LoanDetails> optional = loanRepository.findById(loanId);
 
         LoanDetails loanDetails = null;
@@ -78,6 +80,7 @@ public class LoanServiceImpl implements LoanService {
                 return true;
             }
         }
+        log.info("Not found any loan with loanId {} ", loanId);
         return false;
     }
 
@@ -85,12 +88,12 @@ public class LoanServiceImpl implements LoanService {
     public List<LoanDetails> getLoanDetails(UserData user) {
 
         if (Constant.ROLE_USER.equalsIgnoreCase(user.getRole())) {
-
+            log.info("Found the Role is ROLE_USER");
             List<LoanDetails> loanDetails = loanRepository.findAllByUserId(user.getId());
             return loanDetails;
 
         } else if (Constant.ROLE_ADMIN.equalsIgnoreCase(user.getRole())) {
-
+            log.info("Found the Role is ROLE_ADMIN");
             List<LoanDetails> loanDetails = loanRepository.findAll();
             return loanDetails;
         }
@@ -112,7 +115,8 @@ public class LoanServiceImpl implements LoanService {
             Integer isUpdated = loanRepository.updateLoanAssignee(user.getId(), loanId);
 
             if(isUpdated == 1) {
-                return Constant.ASSIGNED_MSG;
+                log.info(ResponseCodes.ASSIGNED_UPDATED.getValue() + " for loanId {} ", loanId);
+                return ResponseCodes.ASSIGNED_UPDATED.getValue();
             }
         }
 
@@ -135,6 +139,8 @@ public class LoanServiceImpl implements LoanService {
                     loanDetails = optional.get();
 
                     final String loanStatus = loanDetails.getStatus().toUpperCase();
+
+                    log.info("loanStatus : {} ", loanStatus );
                     String resultMsg = "";
 
                     switch (loanStatus) {
@@ -167,9 +173,11 @@ public class LoanServiceImpl implements LoanService {
                             break;
                         }
                     }
+                    log.info(resultMsg + "for loanId: {} ", loanId);
                     return resultMsg;
                 }
 
+                log.info(ResponseCodes.NOT_HAVE_LOAN.getValue());
                 return ResponseCodes.NOT_HAVE_LOAN.getValue();
             }
         } catch (Exception e) {

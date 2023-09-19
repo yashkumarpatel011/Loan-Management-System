@@ -149,7 +149,7 @@ public class LoanServiceImplTest {
 
         String result = loanService.reassignLoan(1);
 
-        assertEquals(Constant.ASSIGNED_MSG,result);
+        assertEquals(ResponseCodes.ASSIGNED_UPDATED.getValue(),result);
     }
 
     @Test
